@@ -1,15 +1,15 @@
-name: Java CI with Maven
+name: Run Tests and Create Jira Issue on Failure
 
 on:
   push:
     branches:
-      - main
+      - main  # Trigger on push to the main branch
   pull_request:
     branches:
-      - main
+      - main  # Trigger on pull requests to the main branch
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,8 +21,28 @@ jobs:
         with:
           java-version: '17'
 
-      - name: Build with Maven
-        run: mvn clean install
-
       - name: Run Tests
-        run: mvn test
+        run: mvn test  # Adjust this to your test command
+
+      - name: Create Jira Issue on Test Failure
+        if: failure()  # This will trigger only on failure
+        run: |
+          curl -u ${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_API_TOKEN }} \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -d '{
+                  "fields": {
+                    "project": {
+                      "key": "PROJECT_KEY"
+                    },
+                    "summary": "Test Failure - New Issue",
+                    "description": "Test failures detected in the latest build. Please investigate.",
+                    "issuetype": {
+                      "name": "Bug"
+                    }
+                  }
+                }' \
+            https://yourcompany.atlassian.net/rest/api/2/issue/
+        env:
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}  # Store your email in GitHub Secrets
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}  # Store your API token in GitHub Secrets

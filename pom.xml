@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.1</version>  <!-- Ensure Spring Boot version is compatible with JDK 23 -->
+        <version>3.4.1</version> <!-- Ensure Spring Boot version is compatible with JDK 17 -->
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -19,8 +19,7 @@
     <description>firsttrytest</description>
 
     <properties>
-        <java.version>23</java.version>  <!-- Ensure compatibility with JDK 23 -->
-        <spring-boot.version>3.4.1</spring-boot.version>  <!-- Spring Boot version -->
+        <java.version>17</java.version> <!-- Update Java version to 17 for compatibility -->
     </properties>
 
     <!-- Dependencies -->
@@ -29,20 +28,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <!-- JUnit 5 for testing -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.8.2</version>  <!-- Updated version of JUnit 5 -->
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.8.2</version>  <!-- Updated version of JUnit 5 -->
-            <scope>test</scope>
         </dependency>
 
         <!-- Spring Boot Starter Test (includes JUnit 5) -->

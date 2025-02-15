@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traduction de la Page</title>
+    <script>
+        async function translateContent() {
+            const textElement = document.getElementById("content");
+            const isoSelect = document.getElementById("isoSelect");
+            const lang = "en"; // Target language
+
+            // Translate main content
+            const response = await fetch("/translate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ text: textElement.innerText, lang: lang })
+            });
+            const data = await response.json();
+            textElement.innerText = data.translated_text;
+
+            // Translate ISO select options
+            const isoResponse = await fetch("/translate_iso", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ lang: lang })
+            });
+            const isoData = await isoResponse.json();
+
+            // Update dropdown list
+            isoSelect.innerHTML = "";
+            isoData.translated_list.forEach(item => {
+                const option = document.createElement("option");
+                option.value = item.definition;
+                option.textContent = `${item.mot} (${item.definition})`;
+                isoSelect.appendChild(option);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Traduction de la Page</h1>
+
+    <p id="content">
+        Contexte Informatique et Sécurité<br>
+        Dans le domaine de l'informatique et de la sécurité, plusieurs concepts clés sont essentiels pour assurer la protection des systèmes et des données. Parmi ces concepts, on retrouve la cybersécurité, qui englobe les pratiques visant à protéger les réseaux, les systèmes et les données contre les attaques malveillantes. La cryptographie joue également un rôle crucial en permettant de sécuriser les communications grâce à des algorithmes de chiffrement. Les pare-feu (firewalls) et les systèmes de détection d'intrusion (IDS) sont des outils indispensables pour surveiller et contrôler le trafic réseau. En outre, la gestion des identités et des accès (IAM) permet de s'assurer que seules les personnes autorisées peuvent accéder à certaines ressources. Enfin, les normes ISO/IEC 27001 et ISO/IEC 27002 fournissent un cadre pour la mise en œuvre de systèmes de management de la sécurité de l'information (SMSI), garantissant ainsi une approche structurée pour protéger les informations sensibles.
+    </p>
+
+    <h3>Sélectionnez une norme ISO</h3>
+    <select id="isoSelect">
+        {% for item in iso_standards %}
+            <option value="{{ item.definition }}">{{ item.mot }} ({{ item.definition }})</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+    <button onclick="translateContent()">Traduire</button>
+</body>
+</html>

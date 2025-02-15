@@ -1,0 +1,27 @@
+[
+  {
+    "name": "John Doe",
+    "description": "Un ingénieur logiciel passionné par l'apprentissage automatique et l'IA.",
+    "job": "Ingénieur Logiciel"
+  },
+  {
+    "name": "Jane Smith",
+    "description": "Une data scientist spécialisée dans l'analyse de données massives et la modélisation prédictive.",
+    "job": "Data Scientist"
+  },
+  {
+    "name": "Raefet Jlidi",
+    "description": "Un ingénieur DevOps avec une expertise en automatisation et technologies de containerisation.",
+    "job": "Ingénieur DevOps"
+  },
+  {
+    "name": "Mia Johnson",
+    "description": "Une conceptrice UI/UX spécialisée dans la création d'applications web centrées sur l'utilisateur.",
+    "job": "Concepteur UI/UX"
+  },
+  {
+    "name": "Lucas Brown",
+    "description": "Un chef de projet ayant de l'expérience dans la gestion d'équipes interfonctionnelles.",
+    "job": "Chef de Projet"
+  }
+]

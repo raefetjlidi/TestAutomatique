@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <script>
+        // Function to translate the entire page (paragraph, keywords, employee table)
+        async function traduireTout() {
+            try {
+                console.log("Traduction de toute la page en cours...");
+
+                // Select the paragraph to translate
+                const paragraphElement = document.getElementById('paragraph');
+                const paragraphText = paragraphElement.innerText;
+
+                // Translate the paragraph
+                const paragraphTranslation = await traduireTexteBatch([paragraphText]);
+
+                // Update the paragraph with the translation
+                paragraphElement.innerText = paragraphTranslation[0];
+
+                // Translate keywords (Select dropdown options)
+                const selectElement = document.getElementById('keywordsSelect');
+                const optionElements = Array.from(selectElement.options);
+                const keywords = optionElements.map(option => option.textContent);
+                const keywordsTranslations = await traduireTexteBatch(keywords);
+
+                // Update the select dropdown with translated keywords
+                optionElements.forEach((option, index) => {
+                    option.textContent = keywordsTranslations[index];
+                });
+
+                // Translate the employee table content
+                const employeeRows = Array.from(document.getElementById("employeeTableBody").rows);
+                const translatedEmployees = await Promise.all(employeeRows.map(async (row) => {
+                    const nameCell = row.cells[0].innerText;
+                    const descriptionCell = row.cells[1].innerText;
+                    const jobCell = row.cells[2].innerText;
+
+                    const [translatedName, translatedDescription, translatedJob] = await traduireTexteBatch([nameCell, descriptionCell, jobCell]);
+
+                    row.cells[0].innerText = translatedName;
+                    row.cells[1].innerText = translatedDescription;
+                    row.cells[2].innerText = translatedJob;
+                }));
+
+                console.log("Traduction terminée.");
+            } catch (error) {
+                console.error("Erreur lors de la traduction:", error);
+            }
+        }
+
+        // Function to send texts for translation
+        async function traduireTexteBatch(textes) {
+            try {
+                const response = await fetch('/traduire_batch', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ textes }),
+                });
+
+                if (!response.ok) {
+                    throw new Error("Erreur lors de la traduction");
+                }
+
+                const data = await response.json();
+                return data.traductions || textes; // Return translations or original text in case of error
+            } catch (error) {
+                console.error("Erreur :", error);
+                return textes; // Return original texts if there is an error
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+
+    <p id="paragraph">
+        Contexte Informatique et Sécurité<br>
+        Dans le domaine de l'informatique et de la sécurité, plusieurs concepts clés sont essentiels pour assurer la protection des systèmes et des données. Parmi ces concepts, on retrouve la cybersécurité, qui englobe les pratiques visant à protéger les réseaux, les systèmes et les données contre les attaques malveillantes. La cryptographie joue également un rôle crucial en permettant de sécuriser les communications grâce à des algorithmes de chiffrement. Les pare-feu (firewalls) et les systèmes de détection d'intrusion (IDS) sont des outils indispensables pour surveiller et contrôler le trafic réseau. En outre, la gestion des identités et des accès (IAM) permet de s'assurer que seules les personnes autorisées peuvent accéder à certaines ressources. Enfin, les normes ISO/IEC 27001 et ISO/IEC 27002 fournissent un cadre pour la mise en œuvre de systèmes de management de la sécurité de l'information (SMSI), garantissant ainsi une approche structurée pour protéger les informations sensibles.
+    </p>
+
+    <label for="keywordsSelect">Keywords</label>
+    <select id="keywordsSelect">
+        {% for keyword in combined_data.keywords %}
+            <option value="{{ keyword }}">{{ keyword }}</option>
+        {% endfor %}
+    </select>
+
+    <h2>Liste des Employés</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Job</th>
+            </tr>
+        </thead>
+        <tbody id="employeeTableBody">
+            {% for employe in combined_data.employes %}
+                <tr>
+                    <td>{{ employe.name if employe.name else 'N/A' }}</td>
+                    <td>{{ employe.description if employe.description else 'N/A' }}</td>
+                    <td>{{ employe.job if employe.job else 'N/A' }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br><br>
+    <button onclick="traduireTout()">Traduire Tout</button>
+</body>
+</html>

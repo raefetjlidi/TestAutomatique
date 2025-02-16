@@ -1,0 +1,64 @@
+{
+    "intents": [
+        {
+            "tag": "definition_norme_iso",
+            "patterns": [
+                "Qu'est-ce qu'une norme ISO?",
+                "Définition d'une norme ISO"
+            ],
+            "responses": [
+                "Une norme ISO est un ensemble de règles et de lignes directrices établies par l'Organisation internationale de normalisation (ISO) pour assurer la qualité, la sécurité et l'efficacité des produits, services et systèmes."
+            ]
+        },
+        {
+            "tag": "iso_9001",
+            "patterns": [
+                "Que signifie ISO 9001?",
+                "Qu'est-ce que la norme ISO 9001?"
+            ],
+            "responses": [
+                "La norme ISO 9001 est une norme internationale qui définit les exigences d'un système de management de la qualité (SMQ). Elle aide les entreprises à garantir la satisfaction des clients et l'amélioration continue de leurs processus."
+            ]
+        },
+        {
+            "tag": "ajouter_procedure_qualite",
+            "patterns": [
+                "Comment ajouter une procédure qualité?",
+                "Ajouter une nouvelle procédure qualité"
+            ],
+            "responses": [
+                "1- Accéder au module Qualité / Procédures\n2- Cliquer sur 'Ajouter'\n3- Remplir les champs nécessaires (titre, description, responsables, etc.)\n4- Valider la procédure"
+            ]
+        },
+        {
+            "tag": "modifier_procedure_qualite",
+            "patterns": [
+                "Comment modifier une procédure qualité?",
+                "Modifier une procédure existante dans le système qualité"
+            ],
+            "responses": [
+                "1- Accéder au module Qualité / Procédures\n2- Rechercher et sélectionner la procédure à modifier\n3- Apporter les modifications nécessaires\n4- Valider les changements"
+            ]
+        },
+        {
+            "tag": "rechercher_document_iso",
+            "patterns": [
+                "Comment rechercher un document lié aux normes ISO?",
+                "Trouver un document ISO spécifique"
+            ],
+            "responses": [
+                "1- Accéder au module Documentation / Normes ISO\n2- Utiliser la barre de recherche pour entrer le titre ou le numéro de la norme\n3- Sélectionner le document souhaité pour le consulter"
+            ]
+        },
+        {
+            "tag": "difference_iso_9001_14001",
+            "patterns": [
+                "Quelle est la différence entre ISO 9001 et ISO 14001?",
+                "Différence entre les normes ISO 9001 et ISO 14001"
+            ],
+            "responses": [
+                "ISO 9001 concerne le management de la qualité, tandis qu'ISO 14001 se concentre sur le management environnemental. ISO 9001 vise l'amélioration des processus et la satisfaction client, alors qu'ISO 14001 aide les entreprises à réduire leur impact environnemental."
+            ]
+        }
+    ]
+}
